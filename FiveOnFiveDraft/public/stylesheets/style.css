@@ -5,46 +5,52 @@ html,body {
 	margin: 0;
 }
 
+/*
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
+*/
 
 a {
   color: #00B7FF;
 }
 
-div.left {
+div {
 	position: relative;
-	/* margin: 5% 30% 5% 5%; */
+	border: 5px solid blue;
+	border-radius: 10px;
+}
+
+div.left {
 	top: 5%;
 	left: 5%;
 	width: 65%;
 	height: 90%;
-	border: 5px solid blue;
-	border-radius: 10px;
 	float: left;
 }
 
 div.right {
-	position: relative;
-	/* margin: 5% 5% 5% 75%;*/
 	top: 5%;
 	left: 75%;
 	width: 20%;
 	height: 90%;
-	border: 5px solid blue;
-	border-radius: 10px;
 }
 
-
-.left input[type='text'] {
-	position: relative;
+.left .lot {
 	top: 25%;
 	left: 10%;
 	width: 80%;
 	height: 20%;
-	display: block;
+	display: table;
+	border: 1px solid blue;
+}
+
+.lot span {
+	font-size: 4em;
+	text-align: center;
+	display: table-cell;
+	vertial-align: middle;
 }
 
 .left input[type='button'] {
