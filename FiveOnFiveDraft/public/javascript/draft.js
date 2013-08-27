@@ -42,13 +42,14 @@ Draft.prototype.init = function () {
 		if (self._unGroupedMemList.length > 0) {
 			if (self._memIndex < 0) {
 				rid = self.setMemberRotation();
-				//set the keyboard event
+				//set the keyboard event. to do later
 			}
 			else {
 				if (rid) clearInterval(rid);
-				//clear the keyboard event
+				//clear the keyboard event. to do later
 				//select the member
-				alert(self._unGroupedMemList[self._memIndex]);
+				var selMem = self._unGroupedMemList.splice(self._memIndex, 1);
+				alert(selMem);
 				self._memIndex = -1;
 			}
 		}
@@ -64,5 +65,5 @@ var triggerElem = document.getElementById("getLuck");
 var ffd = new Draft(disElem, triggerElem); //five five draft
 ffd.fetchMembers('/members');
 ffd.init();
-ffd._disElem.innerHTML = ffd._unGroupedMemList[0];
+//ffd._disElem.innerHTML = ffd._unGroupedMemList[0];
 //alert(ffd._disElem.innerHTML);
