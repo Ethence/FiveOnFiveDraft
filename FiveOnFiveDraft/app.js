@@ -30,6 +30,7 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/members', members.sendjson);
+app.get('/update_members', members.updateMembers);
 app.get('/users', user.list);
 
 http.createServer(app).listen(app.get('port'), function(){
