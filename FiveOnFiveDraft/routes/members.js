@@ -1,9 +1,11 @@
 var fs = require('fs');
 var path = require('path');
 var url = require('url');
+var f = path.resolve(__dirname, '../public/data/members.json'); 
+//var f = path.resolve(__dirname, '../public/data/testMembers2.json'); 
 
 exports.sendjson = function (req, res) {
-	var f = path.resolve(__dirname, '../public/data/members.json'); 
+	//var f = path.resolve(__dirname, '../public/data/members.json'); 
 	fs.readFile(f, {encoding: 'utf8'}, function (err, data) {
 		if(err) throw err;
 		//console.log(data);
@@ -12,7 +14,7 @@ exports.sendjson = function (req, res) {
 };
 
 exports.updateMembers = function (req, res) {
-	var f = path.resolve(__dirname, '../public/data/members.json'); 
+	//var f = path.resolve(__dirname, '../public/data/members.json'); 
 	var queries = url.parse(req.url, true).query;
 	fs.readFile(f, {encoding: 'utf8'}, function (err, data) {
 		if (err) throw err;
@@ -28,7 +30,7 @@ exports.updateMembers = function (req, res) {
 };
 
 exports.clearDraft = function (req, res) {
-	var f = path.resolve(__dirname, '../public/data/members.json'); 
+	//var f = path.resolve(__dirname, '../public/data/members.json'); 
 	fs.readFile(f, {encoding: 'utf8'}, function (err, data) {
 		if (err) throw err;
 		var all = JSON.parse(data);
