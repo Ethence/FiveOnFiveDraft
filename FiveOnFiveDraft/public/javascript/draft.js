@@ -4,14 +4,15 @@ var Constants = {
 		EMPTY_MEMBER : '----'
 };
 
-function Draft(disElem, triggerElem) {
+function Draft(disElem, triggerElem, msgElem, resultContainer) {
 	this._disElem = disElem;
 	this._triggerElem = triggerElem;
+	this._msgElem = msgElem;
+	this._resultContainer = resultContainer;
 	this._groupedMembers = {};
 	this._unGroupedMemList = [];
 	this._memIndex = -1;
 }
-
 
 Draft.prototype.fetchMembers = function (url) {
 	//same host
@@ -59,6 +60,14 @@ Draft.prototype.displayEmptyMember = function () {
 	this._disElem.innerHTML = Constants.EMPTY_MEMBER;
 };
 
+Draft.prototype.confirmLastDraftResult = function (n, g) {
+	this._msgElem.innerHTML = "Congratulations! " + n + " is in " + g;
+};
+
+Draft.prototype.warnFull = function () {
+	this._msgElem.innerHTML = "Woops! Everybody has been assigned a slot.";
+};
+
 Draft.prototype.getNumOfGroupedMembers = function () {
 	return Object.keys(this._groupedMembers).length;
 };
@@ -77,36 +86,70 @@ Draft.prototype.setMemberRotation = function () {
 	return rotateHandler;
 };
 
-Draft.prototype.setMemberSelection = function (rotateHandler) {
+Draft.prototype.addDraftResult = function (name, slot) {
 	
+	var g = slot.charAt(0);
+	var n = slot.slice(1);
+	if (n === '1') {
+		var gDiv = document.createElement("div");
+		gDiv.className = "group-name";
+		gDiv.innerHTML = g;
+		this._resultContainer.appendChild(gDiv);
+	}
+	
+	var r = document.createElement("div");
+	r.className = "result";
+	var s1 = document.createElement("span");
+	var s2 = document.createElement("span");
+	s1.className = "result-sn";
+	s2.className = "result-name";
+	s1.innerHTML = n;
+	s2.innerHTML = name;
+	r.appendChild(s1);
+	r.appendChild(s2);
+	this._resultContainer.appendChild(r);
 };
 
+Draft.prototype.addCurrentDraftResults = function () {
+	var members = Object.keys(this._groupedMembers);
+	var gm = this._groupedMembers;
+	members.sort(function(a,b){
+		if (gm[a] < gm[b]) return -1;
+		else if (gm[a] == gm[b]) return 0;
+		else return 1;
+	});
+	for (var i = 0; i < members.length; i++) {
+		var n = members[i];
+		this.addDraftResult(n, this._groupedMembers[n]);
+	}
+};
 
 Draft.prototype.init = function () {
+	this.fetchMembers('/members');
+	this.updateSlotName();
+	this.addCurrentDraftResults();
 	var self = this;
 	var rid = null;
-	this.updateSlotName();
 	this._triggerElem.onclick = function () {
 		if (self._unGroupedMemList.length > 0) {
 			if (self._memIndex < 0) {
 				rid = self.setMemberRotation();
-				//set the keyboard event. to do later
 			}
 			else {
 				if (rid) clearInterval(rid);
-				//clear the keyboard event. to do later
-				//select the member
 				var selMem = self._unGroupedMemList.splice(self._memIndex, 1);
-				self.addGroupedMember(selMem, self.getSlotName());
-				self.addGroupedMemberOnServer("update_members", selMem, self.getSlotName());
-				alert(selMem + ": " + self.getSlotName());
+				var sn = self.getSlotName();
+				self.addGroupedMember(selMem, sn);
+				self.addGroupedMemberOnServer("update_members", selMem, sn);
+				self.addDraftResult(selMem, sn);
+				self.confirmLastDraftResult(selMem, sn);
 				self._memIndex = -1;
 				self.updateSlotName();
 				self.displayEmptyMember();
 			}
 		}
 		else {
-			alert("All members found their slots!");
+			self.warnFull();
 			self.displayEmptyMember();
 		}
 	};
@@ -133,10 +176,12 @@ Draft.utils.addUrlParameters = function (url, options) {
 };
 
 
+/* ================= Main ================== */
+
 var disElem = document.getElementById("toPick");
+var msgElem = document.querySelector(".left .msg");
+var resultContainer = document.getElementById("resultContainer");
 var triggerElem = document.getElementById("getLuck");
-var ffd = new Draft(disElem, triggerElem); //five five draft
-ffd.fetchMembers('/members');
+var ffd = new Draft(disElem, triggerElem, msgElem, resultContainer); //five five draft
+//ffd.fetchMembers('/members');
 ffd.init();
-//ffd._disElem.innerHTML = ffd._unGroupedMemList[0];
-//alert(ffd._disElem.innerHTML);

@@ -5,45 +5,82 @@ html,body {
 	margin: 0;
 }
 
-/*
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-*/
-
 a {
   color: #00B7FF;
 }
 
 div {
 	position: relative;
-	border: 5px solid blue;
-	border-radius: 10px;
 }
 
 div.left {
+	border: 5px solid blue;
+	border-radius: 10px;
 	top: 5%;
 	left: 5%;
+	bottom: 5%;
 	width: 65%;
 	height: 90%;
 	float: left;
 }
 
 div.right {
+	border: 5px solid blue;
+	border-radius: 10px;
 	top: 5%;
-	left: 75%;
+	left: 10%;
+	bottom: 5%;
 	width: 20%;
 	height: 90%;
+	overflow-y: auto;
+	float: left;
+}
+
+div.result {
+	left: 20%;
+	margin-top: 1%;
+	text-align: left;
+	width: 80%;
+}
+
+div.group-name {
+	left: 10%;
+	margin-top: 5%;
+	text-align: center;
+	width: 80%;
+	font-size: 1.1em;
+	font-weight: bold;
+}
+
+span.result-sn {
+	font-weight: bold;
+	display: inline-block;
+}
+
+span.result-name {
+	display: inline-block;
+	margin-left: 10%;
+}
+
+.left .msg {
+	top: 15%;
+	left: 10%;
+	width: 80%;
+	height: 20%;
+	border: 0;
+	font-size: 2em;
+	color: red;
+	text-align: center;
+	overflow: visible;
 }
 
 .left .lot {
-	top: 25%;
+	top: 18%;
 	left: 10%;
 	width: 80%;
 	height: 20%;
 	display: table;
-	border: 1px solid blue;
+	border: 0 solid blue;
 }
 
 .lot span {
@@ -55,10 +92,13 @@ div.right {
 
 .left input[type='button'] {
 	position: relative;
-	top: 40%;
+	top: 25%;
 	left: 40%;
 	width: 20%;
 	height: 20%;
 	display: block;
 	cursor: pointer;
+	font-size: 3em;
+	font-weight: bold;
+	color: blue;
 }
