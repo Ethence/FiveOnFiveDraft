@@ -31,6 +31,7 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/members', members.sendjson);
 app.get('/update_members', members.updateMembers);
+app.get('/show_members', members.showMembers);
 app.get('/clear_draft', members.clearDraft);
 app.get('/users', user.list);
 
