@@ -1,7 +1,7 @@
 var Constants = {
 		NUM_SLOTS_PER_GROUP : 6,
 		GROUP_LABEL_BASE : 'A',
-		EMPTY_MEMBER : '----'
+		EMPTY_MEMBER : '--------'
 };
 
 function Draft(disElem, triggerElem, msgElem, resultContainer) {
@@ -87,7 +87,6 @@ Draft.prototype.setMemberRotation = function () {
 };
 
 Draft.prototype.addDraftResult = function (name, slot) {
-	
 	var g = slot.charAt(0);
 	var n = slot.slice(1);
 	if (n === '1') {
@@ -108,6 +107,7 @@ Draft.prototype.addDraftResult = function (name, slot) {
 	r.appendChild(s1);
 	r.appendChild(s2);
 	this._resultContainer.appendChild(r);
+	this._resultContainer.parentNode.scrollTop = this._resultContainer.parentNode.scrollHeight;
 };
 
 Draft.prototype.addCurrentDraftResults = function () {
