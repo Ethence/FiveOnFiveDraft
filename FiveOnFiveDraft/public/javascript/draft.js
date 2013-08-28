@@ -61,7 +61,7 @@ Draft.prototype.displayEmptyMember = function () {
 };
 
 Draft.prototype.confirmLastDraftResult = function (n, g) {
-	this._msgElem.innerHTML = "Congratulations! " + n + " is in " + g;
+	this._msgElem.innerHTML = "Congratulations! " + n + " in " + g + "!";
 };
 
 Draft.prototype.warnFull = function () {
