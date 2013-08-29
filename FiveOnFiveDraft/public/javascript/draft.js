@@ -1,7 +1,8 @@
 var Constants = {
 		NUM_SLOTS_PER_GROUP : 6,
 		GROUP_LABEL_BASE : 'A',
-		EMPTY_MEMBER : '--------'
+		EMPTY_MEMBER : '--------',
+		NSPG_QUERY : 'nspg'
 };
 
 function Draft(disElem, triggerElem, msgElem, resultContainer) {
@@ -61,7 +62,7 @@ Draft.prototype.displayEmptyMember = function () {
 };
 
 Draft.prototype.confirmLastDraftResult = function (n, g) {
-	this._msgElem.innerHTML = "Congratulations! " + n + " in " + g + "!";
+	this._msgElem.innerHTML = "Congratulations! <span class=\"warn-emph\">" + n + "</span> in <span class=\"warn-emph\">" + g + "</span>!";
 };
 
 Draft.prototype.warnFull = function () {
@@ -175,13 +176,46 @@ Draft.utils.addUrlParameters = function (url, options) {
 	return newUrl;
 };
 
+Draft.utils.getQueryStringArgs = function () {
+	//get query string without the initial ?
+	var qs = (location.search.length > 0 ? location.search.substring(1) : "");
+	//object to hold data
+	var args = {};
+	//get individual items
+	var items = qs.length ? qs.split("&") : [];
+	var item = null;
+	var name = null;
+	var value = null;
+	//used in for loop
+	var i = 0;
+	var len = items.length;
+	//assign each item onto the args object
+	for (i=0; i < len; i++){
+		item = items[i].split("=");
+		name = decodeURIComponent(item[0]);
+		value = decodeURIComponent(item[1]);
+		if (name.length) {
+			args[name] = value;
+		}
+	}
+	return args;				
+};
+
+
+Draft.utils.setNSPG = function () {
+	var q = Draft.utils.getQueryStringArgs();
+	if (q[Constants.NSPG_QUERY]) {
+		var k = parseInt(q[Constants.NSPG_QUERY], 10);
+		if (k > 0 && k <= 32) Constants.NUM_SLOTS_PER_GROUP = k;
+	}
+};
 
 /* ================= Main ================== */
-
+Draft.utils.setNSPG();
 var disElem = document.getElementById("toPick");
-var msgElem = document.querySelector(".left .msg");
+var msgElem = document.querySelector(".left .msg"); 
+msgElem.innerHTML = "Group Capacity: " + Constants.NUM_SLOTS_PER_GROUP;
 var resultContainer = document.getElementById("resultContainer");
 var triggerElem = document.getElementById("getLuck");
 var ffd = new Draft(disElem, triggerElem, msgElem, resultContainer); //five five draft
-//ffd.fetchMembers('/members');
 ffd.init();

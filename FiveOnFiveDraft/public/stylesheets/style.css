@@ -68,10 +68,11 @@ span.result-name {
 	width: 80%;
 	height: 20%;
 	border: 0;
-	font-size: 2em;
+	font-size: 1.8em;
 	color: red;
 	text-align: center;
 	overflow: visible;
+	white-space:nowarp;
 }
 
 .left .lot {
@@ -101,4 +102,9 @@ span.result-name {
 	font-size: 3em;
 	font-weight: bold;
 	color: blue;
+}
+
+span.warn-emph {
+	font-weight: bold;
+	font-size: 1.2em;
 }
