@@ -36,7 +36,9 @@ exports.clearDraft = function (req, res) {
 		}
 		fs.writeFile(f, JSON.stringify(all), function (){});
 	});
-	res.send("reset successful!");
+	var htmlStr = "<h4>reset successful!</h4><br />";
+	htmlStr += "<a href=\"/show_members\">show</a>";
+	res.send(htmlStr);
 };
 
 exports.showMembers = function (req, res) {
@@ -56,12 +58,17 @@ exports.showMembers = function (req, res) {
 			else if (all[a] == all[b]) return 0;
 			else return 1;
 		});
+		var headStr = "<head><title>Five and Five Members</title></head>";
 		var bodyStr = "<table>";
 		bodyStr += "<tr><th>Name</th><th>Slot</th></tr>";
 		for (var i = 0; i < members.length; i++) {
-			bodyStr += ("<tr><td>"+members[i] + "</td><td>" + all[members[i]] + "</td></tr>");
+			var temp = all[members[i]];
+			if (!temp ) temp = "N/A";
+			bodyStr += ("<tr><td>"+members[i] + "</td><td>&nbsp;&nbsp;" + temp + "</td></tr>");
 		}
 		bodyStr += "</table>";
-		res.send(bodyStr);
+		bodyStr += "<br />";
+		bodyStr += "<a href=\"/clear_draft\">reset</a>";
+		res.send(headStr+bodyStr);
 	});
 };
