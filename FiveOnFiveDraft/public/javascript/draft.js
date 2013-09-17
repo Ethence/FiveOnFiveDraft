@@ -1,5 +1,5 @@
 var Constants = {
-		NUM_SLOTS_PER_GROUP : 6,
+		NUM_SLOTS_PER_GROUP : Infinity,
 		GROUP_LABEL_BASE : 'A',
 		EMPTY_MEMBER : '--------',
 		NSPG_QUERY : 'nspg'
@@ -208,13 +208,15 @@ Draft.utils.setNSPG = function () {
 		var k = parseInt(q[Constants.NSPG_QUERY], 10);
 		if (k > 0 && k <= 32) Constants.NUM_SLOTS_PER_GROUP = k;
 	}
+	if (Constants.NUM_SLOTS_PER_GROUP === Infinity) Constants.GROUP_LABEL_BASE = "";
 };
 
 /* ================= Main ================== */
 Draft.utils.setNSPG();
 var disElem = document.getElementById("toPick");
 var msgElem = document.querySelector(".left .msg"); 
-msgElem.innerHTML = "Group Capacity: " + Constants.NUM_SLOTS_PER_GROUP;
+if (Constants.NUM_SLOTS_PER_GROUP === Infinity) msgElem.innerHTML = "";
+else msgElem.innerHTML = "Group Capacity: " + Constants.NUM_SLOTS_PER_GROUP;
 var resultContainer = document.getElementById("resultContainer");
 var triggerElem = document.getElementById("getLuck");
 var ffd = new Draft(disElem, triggerElem, msgElem, resultContainer); //five five draft

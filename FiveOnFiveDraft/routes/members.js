@@ -69,6 +69,8 @@ exports.showMembers = function (req, res) {
 		bodyStr += "</table>";
 		bodyStr += "<br />";
 		bodyStr += "<a href=\"/clear_draft\">reset</a>";
+		bodyStr += "&nbsp;&nbsp;";
+		bodyStr += "<a href=\"/\">draw</a>";
 		res.send(headStr+bodyStr);
 	});
 };
